@@ -19,6 +19,7 @@ var START_BUTTON = {
         font: "Arial"
     }
 };
+
 /**
  *
  * scene
@@ -27,12 +28,20 @@ var START_BUTTON = {
 function Scene(){
     var me = this;
 
-    me.init = function () {
-        this.container = new PIXI.Container();
-        stage.addChild(this.container)
+    me.show = function () {
+        this.container.visibility = true;
     };
 
-    /**
+    me.hide = function () {
+        this.container.visibility = false;
+    };
+
+    me.init();
+}
+
+Scene.prototype.constructor = Scene;
+
+/**
      *
      * @param {Object} config
      * @param {number} config.x Coordinate
@@ -46,32 +55,30 @@ function Scene(){
      * @param {string} config.text.color
      * @param {string} config.text.font
      */
-    me.addButton = function (config) {
-        var me = this,
-            back = new PIXI.Graphics(),
-            text = new PIXI.Text("Start");
+Scene.prototype.addButton = function (config) {
+    var me = this,
+        back = new PIXI.Graphics(),
+        text = new PIXI.Text("Start");
 
-        back.clear();
-        back.beginFill(0xFF3300);
-        back.drawRect(0,
-            0,
-            config.width,
-            config.height);
-        back.endFill();
-console.log(back)
-        me.button = new PIXI.Sprite(back.generateTexture());
-        me.container.addChild(me.button)
-    };
+    back.clear();
+    back.beginFill(0xFF3300);
+    back.drawRect(0,
+        0,
+        config.width,
+        config.height);
+    back.endFill();
 
-    me.show = function () {
-        this.container.visibility = true;
-    };
+    me.button = new PIXI.Sprite(back.generateTexture());
+    me.container.addChild(me.button)
+};
 
-    me.hide = function () {
-        this.container.visibility = false;
-    };
+Scene.prototype.init = function () {
+    this.container = new PIXI.Container();
+    stage.addChild(this.container)
+};
 
-    me.init();
+function Counter() {
+    var me = this;
 }
 
 /**
