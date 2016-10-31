@@ -20,7 +20,7 @@ EventSystem.prototype = {
             listener.events[event].apply(listener);
         });
     }
-}
+};
 
 var EventManager = new EventSystem();
 
@@ -28,7 +28,7 @@ var EventManager = new EventSystem();
 function Event() {
     this.events = {};
     this.eventManager = EventManager;
-};
+}
 
 Event.prototype = {
 
