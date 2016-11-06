@@ -14,34 +14,11 @@ Observable.prototype = {
     },
 
     trigger: function(event) {
-        this.eventManager.triggerEvent(event);
+        var data = Array.prototype.slice.call(arguments, 1)
+        this.eventManager.triggerEvent(event, data);
     },
 
     extend: function () {
 
     }
 };
-
-function MyObject(name){
-    Observable.call(this);
-    this.name = name;
-}
-
-MyObject.prototype = Object.create(Observable.prototype);
-MyObject.prototype.constructor = MyObject;
-MyObject.prototype.foo = function(){
-    this.trigger("foo");
-};
-
-var o = new MyObject("o");
-var a = new MyObject("a");
-
-o.on("foo", function(){
-    console.log("foo received in o")
-    console.log(this)
-});
-
-a.on("foo", function(){
-    console.log("foo received in a")
-    console.log(this)
-});

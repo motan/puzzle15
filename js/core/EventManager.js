@@ -13,11 +13,11 @@ EventSystem.prototype = {
         this._events[event].push(context);
     },
 
-    triggerEvent: function(event) {
+    triggerEvent: function(event, data) {
         var listeners = this._events[event] || [];
 
         listeners.forEach(function(listener){
-            listener.events[event].apply(listener);
+            listener.events[event].apply(listener, data);
         });
     }
 };
