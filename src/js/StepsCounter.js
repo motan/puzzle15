@@ -1,61 +1,60 @@
-function StepsCounter (config) {
-    var me = this,
-        background = {
-            width: 100,
-            height: 50,
-            background: "#cccccc",
-            stroke: {
-                width: 2,
-                alpha: 1, 
-                color: "#ffff00",
-            }
-        },
-        text = new PIXI.Text("0", {
-            fontWeight: 'bold',
-            fontSize: 30,
-            fontFamily: 'Arial',
-            fill: '#000000',
-            align: 'center'
-        });
+export default class StepsCounter {
 
-    me.container = new PIXI.Sprite(createTexture(background));
-    me.container.addChild(text);
-    me.text = text;
-    me.container.x = config.position.x;
-    me.container.y = config.position.y;
+  constructor (config) {
+    let background = {
+      width: 100,
+      height: 50,
+      background: "#cccccc",
+      stroke: {
+        width: 2,
+        alpha: 1, 
+        color: "#ffff00",
+      }
+    };
+    let text = new PIXI.Text("0", {
+      fontWeight: 'bold',
+      fontSize: 30,
+      fontFamily: 'Arial',
+      fill: '#000000',
+      align: 'center'
+    });
 
-    me.history = [{fieldSet: config.fieldSet}];
-    me.currentStep = 0;
+    this.container = new PIXI.Sprite(createTexture(background));
+    this.container.addChild(text);
+    this.text = text;
+    this.container.x = config.position.x;
+    this.container.y = config.position.y;
 
-    me.updateView();
-}
+    this.history = [{fieldSet: config.fieldSet}];
+    this.currentStep = 0;
 
-StepsCounter.prototype.constructor = StepsCounter;
+    this.updateView();
+  }
 
-StepsCounter.prototype.doStep = function(fieldSet, gapPosition, newGapPosition, tileNumber) {
+  doStep (fieldSet, gapPosition, newGapPosition, tileNumber) {
     this.history.push({fieldSet: fieldSet, gapPosition: gapPosition, newGapPosition: newGapPosition, tileNumber: tileNumber});
     this.currentStep++;
     this.updateView();
-}
+  }
 
-StepsCounter.prototype.undoStep = function() {
-    var me = this,
-        step = this.history[this.history.length-1];
+  undoStep () {
+    let step = this.history[this.history.length-1];
 
-    if (me.history.length > 1){
-        me.history.splice(-1, 1);
-        me.currentStep--;
-        me.updateView();
+    if (this.history.length > 1){
+      this.history.splice(-1, 1);
+      this.currentStep--;
+      this.updateView();
     }
     
-    return {step: step, lastStep: me.currentStep === 0};
-}
+    return {step: step, lastStep: this.currentStep === 0};
+  }
 
-StepsCounter.prototype.updateView = function() {
-    var me = this,
-        str = me.text;
+  updateView () {
+    let str = this.text;
 
-    str.text = me.currentStep.toString();
-    str.x = (me.container.width - str.width) / 2;
-    str.y = (me.container.height - str.height) / 2;
+    str.text = this.currentStep.toString();
+    str.x = (this.container.width - str.width) / 2;
+    str.y = (this.container.height - str.height) / 2;
+  }
+
 }
