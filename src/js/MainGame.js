@@ -1,3 +1,5 @@
+import Field from './Field.js';
+
 function MainGame () {
     Scene.call(this);
 
