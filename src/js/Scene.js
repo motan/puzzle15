@@ -1,19 +1,19 @@
-function Scene(){
+export default class Scene {
+  constructor () {
     this.container = new PIXI.Container();
     this.container.pivot = new PIXI.Point(0, 0);
     Stage.addChild(this.container);
-}
+  }
 
-Scene.prototype.constructor = Scene;
-
-Scene.prototype.show = function () {
+  show () {
     this.container.visible = true;
-}
+ }
 
-Scene.prototype.hide = function () {
+  hide () {
     this.container.visible = false;
-}
+  }
 
-Scene.prototype.addChild = function (element) {
+  addChild (element) {
     this.container.addChild(element.container || element);
+  }
 }

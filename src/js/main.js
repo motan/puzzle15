@@ -1,12 +1,17 @@
-var renderer = PIXI.autoDetectRenderer(500, 500);
+import Button from './Button.js';
+import MainGame from './MainGame.js';
+import Scene from './Scene.js';
+import utils from './utils.js';
+
+let renderer = PIXI.autoDetectRenderer(500, 500);
 
 //Add the canvas to the HTML document
 document.body.appendChild(renderer.view);
 
 //Create a container object called the `stage`
-var Stage = new PIXI.Container();
+let Stage = new PIXI.Container();
 
-var Game = {
+let Game = {
 
     config: {
         width: 500,
@@ -21,10 +26,9 @@ var Game = {
     },
 
     createScenes: function () {
-        var me = this;
 
-        me.scenes = {
-            intro: me.createIntro(),
+        this.scenes = {
+            intro: this.createIntro(),
             mainGame: new MainGame(),
             outro: new Scene()
         }
@@ -32,7 +36,7 @@ var Game = {
     },
 
     switchScenes: function (newActiveScene) {
-        var me = this;
+        let me = this;
 
         if (me.activeScene && me.activeScene !== newActiveScene) {
             me.scenes[me.activeScene].hide();
@@ -50,7 +54,7 @@ var Game = {
     },
 
     createIntro: function () {
-        var me = this,
+        let me = this,
             config = me.config,
             buttonConfig = {
                 width: 120,
