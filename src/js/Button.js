@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 const ACTIONS = {
   tintDownFactor: 0x0000FF,
   tintHoverFactor: 0xFF0000,
@@ -7,10 +9,9 @@ const ACTIONS = {
 
 const LABEL_PADDING = 3
 
-export default class Button extends PIXI.Sprite
-{
+export default class Button extends PIXI.Sprite {
   constructor(config) {
-        
+    super();
     this.ACTIONS 
 
     if (config.text) {

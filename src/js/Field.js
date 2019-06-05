@@ -1,3 +1,7 @@
+import * as PIXI from 'pixi.js';
+import {generateButtonTextures, createTexture} from './utils.js';
+import Tile from './Tile.js';
+
 export default class Field {
   constructor (config){
     this.config = {
@@ -81,10 +85,13 @@ export default class Field {
   fill () {
     let tileObject;
 
-    this.fieldSet.forEach(function (row, rowIndex) {
-      row.forEach(function (tile, colIndex) {
+    this.fieldSet.forEach((row, rowIndex) => {
+      row.forEach((tile, colIndex) => {
         if (tile !== 0) {
-          tileObject = this.createTile(tile, rowIndex, colIndex);
+          let config = this.config.tile;
+          config.text.text = tile;
+          config.images = generateButtonTextures(config);
+          tileObject = new Tile({ rowIndex, colIndex, config, cb: (tile) => this.requestToMoveTile(tile) });
           this.container.addChild(tileObject);
         }
         else {
@@ -92,24 +99,6 @@ export default class Field {
         }
       })
     })
-  }
-
-  createTile (num, rowIndex, colIndex) {
-    let config = this.config.tile,
-        tile;
-
-    config.text.text = num;
-    config.images = generateButtonTextures(config);
-    config.clickCallback = function () {
-        this.requestToMoveTile(this);
-    }
-    tile = new Button(config);
-    tile.number = num;
-    tile.x = colIndex * config.width;
-    tile.y = rowIndex * config.height;
-    tile.fieldPosition = { x: colIndex, y: rowIndex }
-
-    return tile;
   }
 
   requestToMoveTile (tile) {
@@ -147,11 +136,12 @@ export default class Field {
     let checkArray = [],
         isWin = false;
 
-    this.fieldSet.forEach(function (row) {
+    this.fieldSet.forEach((row) =>  {
       checkArray = checkArray.concat(row);
     })
 
-    isWin = checkArray.pop().every(function (item, index) {
+    checkArray.pop();
+    isWin = checkArray.every((item, index) => {
       return item === index + 1;
     })
 

@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 function createTexture(config){
     var me = this,
         graphics = new PIXI.Graphics(),
@@ -17,7 +19,7 @@ function createTexture(config){
     graphics.drawRect(0, 0, width, height);
     graphics.endFill();
 
-    return graphics.generateCanvasTexture();
+    return renderer.generateTexture(graphics, 1, renderer.resolution);
 }
 
 function generateButtonTextures (config){
@@ -31,3 +33,5 @@ function generateButtonTextures (config){
 
     return textures;
 }
+
+export {generateButtonTextures, createTexture}

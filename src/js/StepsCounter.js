@@ -1,3 +1,6 @@
+import * as PIXI from 'pixi.js';
+import {createTexture} from './utils.js';
+
 export default class StepsCounter {
 
   constructor (config) {

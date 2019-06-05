@@ -1,8 +1,13 @@
 import Field from './Field.js';
 import StepsCounter from './StepsCounter.js';
+import Scene from './Scene.js';
+import Button from './Button.js';
+import {generateButtonTextures} from './utils.js';
 
 export default class MainGame extends Scene {
-  constructor() {
+  constructor(Stage) {
+    super(Stage);
+
     this.config = {
       field: {
         position: {
@@ -84,10 +89,10 @@ export default class MainGame extends Scene {
       fieldSet: this.field.fieldSet
     });
 
-    config.clickCallback = function () {
+    config.clickCallback = () => {
       let pos = this.stepsCounter.undoStep(),
         tileNumber = pos.step.tileNumber,
-        tile = this.field.container.children.find(function(el){//attention! find does not work in IE
+        tile = this.field.container.children.find((el) => {//attention! find does not work in IE
           return el.number === tileNumber;
         });
           
